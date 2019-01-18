@@ -6,7 +6,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/concourse/concourse/atc"
+	"github.com/concourse/atc"
 )
 
 type GithubWebhookHandler struct {

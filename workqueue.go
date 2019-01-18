@@ -11,7 +11,7 @@ import (
 	"k8s.io/client-go/util/workqueue"
 
 	"github.com/prometheus/client_golang/prometheus"
-	_ "github.com/sapcc/webhook-broadcaster/prometheus"
+	_ "github.com/alasconnect/webhook-broadcaster/prometheus"
 )
 
 const (

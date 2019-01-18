@@ -6,7 +6,7 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/concourse/concourse/go-concourse/concourse"
+	"github.com/concourse/go-concourse/concourse"
 	"golang.org/x/oauth2"
 )
 

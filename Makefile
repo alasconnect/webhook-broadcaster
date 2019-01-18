@@ -1,5 +1,5 @@
-PKG:=github.com/sapcc/webhook-broadcaster
-IMAGE:=sapcc/concourse-webhook-broadcaster
+PKG:=github.com/alasconnect/webhook-broadcaster
+IMAGE:=alasconnect/concourse-webhook-broadcaster
 VERSION:=0.5.0
 build:
 	go build -v -o bin/webhook-broadcaster $(PKG)
