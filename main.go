@@ -27,6 +27,7 @@ var (
 	concourseURL       string
 	authUser           string
 	authPassword       string
+	webhookToken  		 string
 	refreshInterval    time.Duration
 	webhookConcurrency int
 	flags              *flag.FlagSet
@@ -39,6 +40,7 @@ func init() {
 	flags.StringVar(&concourseURL, "concourse-url", "", "External URL of the concourse api")
 	flags.StringVar(&authUser, "auth-user", "", "Basic auth concourse username")
 	flags.StringVar(&authPassword, "auth-password", "", "Basic auth concourse password")
+	flags.StringVar(&webhookToken, "webhook-token", "", "Token to send concourse resources")
 	flags.DurationVar(&refreshInterval, "refresh-interval", 5*time.Minute, "Resource refresh interval")
 	flags.IntVar(&webhookConcurrency, "webhook-concurrency", 20, "How many resources to notify in parallel")
 }
@@ -46,8 +48,8 @@ func init() {
 func main() {
 	flags.Parse(os.Args[1:])
 
-	if concourseURL == "" || authUser == "" || authPassword == "" {
-		log.Fatal("Missing one or more of required flags: -concourse-url -auth-user -auth-password")
+	if concourseURL == "" || authUser == "" || authPassword == "" || webhookToken == "" {
+		log.Fatal("Missing one or more of required flags: -concourse-url -auth-user -auth-password -webhook-token")
 	}
 
 	concourseClient, err := NewConcourseClient(concourseURL, authUser, authPassword)

@@ -103,6 +103,11 @@ func (c *RequestWorkqueue) perform(url string) error {
 	log.Printf("Calling POST %s", redactedURL)
 	response, err := http.Post(url, "", nil)
 	if err != nil || response.StatusCode >= 400 {
+		log.Printf("Request failed. URL: %s, response: %s Error: %v",
+			redactedURL,
+			response.Status,
+			err,
+		)
 		return fmt.Errorf("Request failed. URL: %s, response: %s Error: %v",
 			redactedURL,
 			response.Status,
