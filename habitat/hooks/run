@@ -1,0 +1,10 @@
+#!/bin/sh
+
+exec 2>&1
+
+exec webhook-broadcaster \
+  --concourse-url "{{cfg.concourse.url}}" \
+  --auth-user "{{cfg.concourse.user}}" \
+  --auth-password "{{cfg.concourse.password}}" \
+  --listen-addr :{{cfg.port}} \
+  --webhook-token "{{cfg.webhook_token}}"

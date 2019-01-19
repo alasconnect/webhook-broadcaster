@@ -1,0 +1,7 @@
+port = 8081
+webhook_token = "test"
+
+[concourse]
+url = "http://127.0.0.1"
+user = "concourse"
+password = "concourse"
