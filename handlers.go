@@ -47,7 +47,18 @@ func (gh *GithubWebhookHandler) ServeHTTP(rw http.ResponseWriter, req *http.Requ
 					pipeline.Team,
 					pipeline.Name,
 					resource.Name,
-					resource.WebhookToken,
+					webhookToken,
+				)
+				gh.queue.Add(webhookURL)
+			}
+		} else if repository, ok := resource.Source["repository"].(string); ok {
+			if repository == pushEvent.Repository.FullName {
+				webhookURL := fmt.Sprintf("%s/api/v1/teams/%s/pipelines/%s/resources/%s/check/webhook?webhook_token=%s",
+					concourseURL,
+					pipeline.Team,
+					pipeline.Name,
+					resource.Name,
+					webhookToken,
 				)
 				gh.queue.Add(webhookURL)
 			}

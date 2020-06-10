@@ -1,4 +1,4 @@
-package: github.com/sapcc/webhook-broadcaster
+package: github.com/alasconnect/webhook-broadcaster
 import:
  - package: k8s.io/client-go
    version: release-8.0
