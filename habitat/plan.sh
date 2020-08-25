@@ -32,15 +32,6 @@ do_unpack() {
   return $?
 }
 
-do_prepare() {
-  cd "${project_go_path}"
-
-  go get github.com/Masterminds/glide
-  $HAB_CACHE_SRC_PATH/$pkg_dirname/bin/glide install
-
-  return $?
-}
-
 do_build() {
   cd "${project_go_path}"
 

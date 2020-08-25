@@ -9,9 +9,8 @@ import (
 
 	"k8s.io/apimachinery/pkg/util/wait"
 	"k8s.io/client-go/util/workqueue"
-
-	"github.com/prometheus/client_golang/prometheus"
-	_ "github.com/alasconnect/webhook-broadcaster/prometheus"
+	// "github.com/prometheus/client_golang/prometheus"
+	// _ "github.com/alasconnect/webhook-broadcaster/prometheus"
 )
 
 const (
@@ -23,8 +22,8 @@ type RequestWorkqueue struct {
 	queue       workqueue.RateLimitingInterface
 	threadiness int
 
-	webhooksSuccess prometheus.Counter
-	webhooksErrors  prometheus.Counter
+	// webhooksSuccess prometheus.Counter
+	// webhooksErrors  prometheus.Counter
 }
 
 func NewRequestWorkqueue(threadiness int) *RequestWorkqueue {
@@ -32,22 +31,21 @@ func NewRequestWorkqueue(threadiness int) *RequestWorkqueue {
 		queue:       workqueue.NewNamedRateLimitingQueue(workqueue.NewItemExponentialFailureRateLimiter(WORKER_BASE_DELAY, WORKER_MAX_DELAY), "webhook"),
 		threadiness: threadiness,
 
-		webhooksSuccess: prometheus.NewCounter(prometheus.CounterOpts{
-			Subsystem: "webhook",
-			Name:      "success_total",
-			Help:      "Total number of successfully delivered webhooks",
-		}),
-		webhooksErrors: prometheus.NewCounter(prometheus.CounterOpts{
-			Subsystem: "webhook",
-			Name:      "errors_total",
-			Help:      "Total number of successfully delivered webhooks",
-		}),
+		// webhooksSuccess: prometheus.NewCounter(prometheus.CounterOpts{
+		// 	Subsystem: "webhook",
+		// 	Name:      "success_total",
+		// 	Help:      "Total number of successfully delivered webhooks",
+		// }),
+		// webhooksErrors: prometheus.NewCounter(prometheus.CounterOpts{
+		// 	Subsystem: "webhook",
+		// 	Name:      "errors_total",
+		// 	Help:      "Total number of successfully delivered webhooks",
+		// }),
 	}
 
-	prometheus.Register(wq.webhooksSuccess)
-	prometheus.Register(wq.webhooksErrors)
+	// prometheus.Register(wq.webhooksSuccess)
+	// prometheus.Register(wq.webhooksErrors)
 	return wq
-
 }
 
 func (c *RequestWorkqueue) Add(url string) {
@@ -79,11 +77,11 @@ func (c *RequestWorkqueue) processNextWorkItem() bool {
 	defer c.queue.Done(key)
 
 	err := c.perform(key.(string))
-	if err != nil {
-		c.webhooksErrors.Inc()
-	} else {
-		c.webhooksSuccess.Inc()
-	}
+	// if err != nil {
+	// 	c.webhooksErrors.Inc()
+	// } else {
+	// 	c.webhooksSuccess.Inc()
+	// }
 	if err != nil && c.queue.NumRequeues(key) < 5 {
 		// Re-enqueue the key rate limited. Based on the rate limiter on the
 		// queue and the re-enqueue history, the key will be processed later again.

@@ -11,8 +11,8 @@ import (
 	"time"
 
 	"github.com/oklog/run"
-	"github.com/prometheus/client_golang/prometheus"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
+	// "github.com/prometheus/client_golang/prometheus"
+	// "github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 type resource struct {
@@ -114,17 +114,18 @@ func main() {
 		log.Printf("Listening for incoming webhooks on %s", ln.Addr())
 		mux := http.NewServeMux()
 
-		requestCounter := prometheus.NewCounterVec(
-			prometheus.CounterOpts{
-				Name: "http_requests_total",
-				Help: "Total number of incoming HTTP requests",
-			},
-			[]string{"code", "method"},
-		)
-		prometheus.Register(requestCounter)
-		ghHandler := promhttp.InstrumentHandlerCounter(requestCounter, &GithubWebhookHandler{requestQueue})
+		// requestCounter := prometheus.NewCounterVec(
+		// 	prometheus.CounterOpts{
+		// 		Name: "http_requests_total",
+		// 		Help: "Total number of incoming HTTP requests",
+		// 	},
+		// 	[]string{"code", "method"},
+		// )
+		// prometheus.Register(requestCounter)
+		// ghHandler := promhttp.InstrumentHandlerCounter(requestCounter, &GithubWebhookHandler{requestQueue})
+		ghHandler := &GithubWebhookHandler{requestQueue}
 		mux.Handle("/github", ghHandler)
-		mux.Handle("/metrics", promhttp.Handler())
+		// mux.Handle("/metrics", promhttp.Handler())
 		return http.Serve(ln, mux)
 	}, func(_ error) {
 		ln.Close()

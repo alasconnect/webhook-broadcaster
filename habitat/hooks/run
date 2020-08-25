@@ -7,4 +7,7 @@ exec webhook-broadcaster \
   --auth-user "{{cfg.concourse.user}}" \
   --auth-password "{{cfg.concourse.password}}" \
   --listen-addr :{{cfg.port}} \
-  --webhook-token "{{cfg.webhook_token}}"
+  --webhook-token "{{cfg.webhook_token}}" \
+  --refresh-interval "5m" \
+  --webhook-concurrency "20"
+
