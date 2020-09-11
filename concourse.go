@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"errors"
 	"net/http"
 	"net/url"
 	"time"
@@ -60,11 +59,6 @@ func (c *client) RefreshClientWithToken() (concourse.Client, error) {
 		if err != nil {
 			return nil, err
 		}
-		idToken, ok := c.token.Extra("id_token").(string)
-		if !ok {
-			return nil, errors.New("missing id_token")
-		}
-		c.token.AccessToken = idToken
 	}
 
 	httpClient := c.oauth2Config.Client(c.ctx, c.token)
