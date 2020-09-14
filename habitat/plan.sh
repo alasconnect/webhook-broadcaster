@@ -18,6 +18,8 @@ pkg_build_deps=(
 
 pkg_bin_dirs=(bin)
 
+pkg_svc_user="root"
+
 do_begin() {
   export GOPATH="${HAB_CACHE_SRC_PATH}/${pkg_dirname}"
   project_go_path="${GOPATH}/src/github.com/alasconnect/${pkg_name}"

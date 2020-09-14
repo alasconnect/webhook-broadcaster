@@ -2,6 +2,14 @@
 
 exec 2>&1
 
+# Set soft file limit, due to socket usage
+{{#if cfg.runtime.max_open_files ~}}
+echo "Setting ulimit: "
+ulimit -n
+ulimit -n {{cfg.runtime.max_open_files}}
+ulimit -n
+{{~ /if}}
+
 exec webhook-broadcaster \
   --concourse-url "{{cfg.concourse.url}}" \
   --auth-user "{{cfg.concourse.user}}" \
